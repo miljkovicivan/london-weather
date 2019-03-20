@@ -3,7 +3,6 @@ import json
 import os
 
 
-
 def get_weather():
     from london.models import Weather
     url = "http://api.openweathermap.org/data/2.5/weather?q=London,Uk"
