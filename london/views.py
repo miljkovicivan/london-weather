@@ -1,8 +1,5 @@
 from rest_framework import generics
-from django.http import HttpResponse
-from django.template import loader
 from django.shortcuts import render
-
 
 from london.models import Weather
 from london.serializers import WeatherSerializer
@@ -14,7 +11,6 @@ class WeatherView(generics.RetrieveAPIView):
 
     def get_object(self, *args, **kwargs):
         return Weather.objects.last()
-
 
 
 weather_view = WeatherView.as_view()
