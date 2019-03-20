@@ -1,2 +1,4 @@
 .python-version
 db.sqlite3
+
+*.pyc
