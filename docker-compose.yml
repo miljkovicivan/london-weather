@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+  rest-api:
+    build: .
+    ports:
+     - 8123:8000
+    volumes:
+     - .:/code
+    environment:
+     - ENV=local 
+
+    tty: true
+    command: bash
