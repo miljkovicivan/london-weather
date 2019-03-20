@@ -28,7 +28,7 @@ app.autodiscover_tasks()
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
 
-    sender.add_periodic_task(10 * 1.0, get_weather_task.s(), name='get weather')
+    sender.add_periodic_task(60 * 60 * 1.0, get_weather_task.s(), name='get weather')
 
 
 @app.task
