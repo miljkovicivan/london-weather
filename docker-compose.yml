@@ -4,12 +4,36 @@ services:
 
   rest-api:
     build: .
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     ports:
      - 8123:8000
     volumes:
      - .:/code
     environment:
      - ENV=local 
+     - DJANGO_SETTINGS_MODULE=weather.settings
+     - OPEN_WEATHER_MAP_X_API_KEY=insert_key_here
 
-    tty: true
-    command: bash
+
+  redis:
+    image: redis:alpine
+
+  worker:
+    build: .
+    command: celery -A weather worker -l info
+    volumes:
+      - .:/code
+    environment:
+     - ENV=local 
+     - DJANGO_SETTINGS_MODULE=weather.settings
+     - OPEN_WEATHER_MAP_X_API_KEY=insert_key_here
+
+  scheduler:
+    build: .
+    command: celery -A weather beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - .:/code
+    environment:
+     - ENV=local 
+     - DJANGO_SETTINGS_MODULE=weather.settings
+     - OPEN_WEATHER_MAP_X_API_KEY=insert_key_here
